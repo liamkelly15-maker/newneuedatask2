@@ -1,0 +1,25 @@
+version: '3'
+
+services:
+  encrypt:
+    build: ./NeudaTaskA
+    volumes:
+      - type: bind
+        source: C:\Users\NeuedaSupport\NeuedaTask2\json_file.json
+        target: /jsonfileloc/json_file.json
+      - type: volume
+        source: datavolume
+        target: /data
+
+  decrypt:
+    build: ./NeudaTaskB
+    depends_on:
+      - "encrypt"
+    volumes:
+      - type: volume
+        source: datavolume
+        target: /data
+
+volumes:
+  datavolume: {}
+
