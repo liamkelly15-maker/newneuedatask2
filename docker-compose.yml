@@ -5,11 +5,11 @@ services:
     build: ./NeudaTaskA
     volumes:
       - type: bind
-        source: C:\Users\NeuedaSupport\NeuedaTask2\json_file.json
-        target: /jsonfileloc/json_file.json
+        source: {%cd%}\json_file.json
+        target: ./json_file.json
       - type: volume
         source: datavolume
-        target: /data
+        target: /outputdata
 
   decrypt:
     build: ./NeudaTaskB
@@ -18,7 +18,11 @@ services:
     volumes:
       - type: volume
         source: datavolume
-        target: /data
+        target: /outputdata
+
+#put the named volumes here - this can be shared between containers
+#the named volumes are used for sharing generated data
+#the bind volume is used for passing in data
 
 volumes:
   datavolume: {}
