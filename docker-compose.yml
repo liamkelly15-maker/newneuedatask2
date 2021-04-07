@@ -1,12 +1,13 @@
 version: '3'
 
+#i was trying to use the named volume but could not locate the docker volume mount to check the results
 services:
   encrypt:
     build: ./NeudaTaskA
     volumes:
       - type: bind
-        source: {%cd%}\json_file.json
-        target: ./json_file.json
+        source: C:\Users\NeuedaSupport\newNeuedatask2
+        target: /data
       - type: volume
         source: datavolume
         target: /outputdata
@@ -16,13 +17,16 @@ services:
     depends_on:
       - "encrypt"
     volumes:
+      - type: bind
+        source: C:\Users\NeuedaSupport\newNeuedatask2
+        target: /data
       - type: volume
         source: datavolume
         target: /outputdata
 
 #put the named volumes here - this can be shared between containers
-#the named volumes are used for sharing generated data
-#the bind volume is used for passing in data
+#the named volumes are used for sharing generated data-docker decides where the volume is mounted
+#the bind volume is used for passing in data-programmer decides where the volume is mounted
 
 volumes:
   datavolume: {}

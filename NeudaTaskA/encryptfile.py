@@ -7,26 +7,26 @@ from json2xml import json2xml
 from json2xml.utils import readfromstring
 
 # Opening JSON file
-f = open("./json_file.json", "r")
+f = open("/inputdata/json_file.json", "r")
 
 # returns JSON object as a dictionary
 data = json.load(f)
 #convert dict to string
 data2= json.dumps(data)
 data3 = readfromstring(data2)
-#convert the string to xml and write to file
-with open("./json_to_xml.xml", "w") as f:
+#convert the string to xml and write to file on namedvolume /outputdata
+with open("/data/json_to_xml.xml", "w") as f:
     f.write(json2xml.Json2xml(data3).to_xml())
 
 def write_key():
-    """Generates a key and save it into a file"""
+    """Generates a key and save it into a file on named volume /outputdata"""
     key = Fernet.generate_key()
-    with open("./key.key", "wb") as key_file:
+    with open("/data/key.key", "wb") as key_file:
         key_file.write(key)
 
 def load_key():
-    """Loads the key from the current directory named `key.key`"""
-    return open("./key.key", "rb").read()
+    """Loads the key from the named volume /outputdata named `key.key`"""
+    return open("/data/key.key", "rb").read()
 
 def encrypt(filename, key):
     """Given a filename (str or xml) and key (bytes), it encrypts the file and write it"""
@@ -59,7 +59,7 @@ key = load_key()
 #check the key
 #print(key)
 # file name
-file = "./json_to_xml.xml"
+file = "/data/json_to_xml.xml"
 # encrypt it
 encrypt(file, key)
 
